@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# JetBrains IntelliJ IDEA
+*.iml
+
+# Apache Maven
+target/
+
+# Azure Functions
+obj/
+extensions.csproj
+
+# Test data set
+src/test/resources/*.csv

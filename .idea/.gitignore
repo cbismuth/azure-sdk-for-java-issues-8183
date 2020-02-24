@@ -1,0 +1,12 @@
+*
+
+!.gitignore
+
+!codeStyles/
+!codeStyles/*.xml
+
+!inspectionProfiles/
+!inspectionProfiles/*.xml
+
+!runConfigurations/
+!runConfigurations/*.xml
