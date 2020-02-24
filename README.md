@@ -1,0 +1,48 @@
+# azure-sdk-for-java/issues/8183
+
+```
+Exception in thread "main" reactor.core.Exceptions$ReactiveException: java.io.IOException: closed
+	at reactor.core.Exceptions.propagate(Exceptions.java:326)
+	at reactor.core.publisher.BlockingSingleSubscriber.blockingGet(BlockingSingleSubscriber.java:91)
+	at reactor.core.publisher.Mono.block(Mono.java:1494)
+	at com.azure.storage.common.implementation.StorageImplUtils.blockWithOptionalTimeout(StorageImplUtils.java:99)
+	at com.azure.storage.blob.specialized.BlobClientBase.downloadToFileWithResponse(BlobClientBase.java:563)
+	at com.azure.storage.blob.specialized.BlobClientBase.downloadToFile(BlobClientBase.java:488)
+	at fr.tf1.data.monitoring.azure.AzureBlobItemsFinderService.downloadToFile(AzureBlobItemsFinderService.java:51)
+	at fr.tf1.data.monitoring.azure.AzureBlobItemsFinderService.lambda$queryBlobContainerItem$1(AzureBlobItemsFinderService.java:41)
+	at java.lang.Iterable.forEach(Iterable.java:75)
+	at fr.tf1.data.monitoring.azure.AzureBlobItemsFinderService.queryBlobContainerItem(AzureBlobItemsFinderService.java:41)
+	at fr.tf1.data.monitoring.azure.AzureBlobItemsFinderService.lambda$queryStorageAccount$0(AzureBlobItemsFinderService.java:33)
+	at java.util.Iterator.forEachRemaining(Iterator.java:116)
+	at java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801)
+	at java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:647)
+	at fr.tf1.data.monitoring.azure.AzureBlobItemsFinderService.queryStorageAccount(AzureBlobItemsFinderService.java:33)
+	at java.lang.Iterable.forEach(Iterable.java:75)
+	at fr.tf1.data.monitoring.azure.AzureBlobItemsFinderService.queryStorageAccounts(AzureBlobItemsFinderService.java:26)
+	at fr.tf1.data.monitoring.azure.AzureBlobItemsFinderApp.main(AzureBlobItemsFinderApp.java:11)
+	Suppressed: java.lang.Exception: #block terminated with an error
+		at reactor.core.publisher.BlockingSingleSubscriber.blockingGet(BlockingSingleSubscriber.java:93)
+		... 16 more
+Caused by: java.io.IOException: closed
+	at okio.RealBufferedSource$inputStream$1.read(RealBufferedSource.kt:434)
+	at java.io.InputStream.read(InputStream.java:101)
+	at com.azure.core.http.okhttp.OkHttpAsyncHttpClient$OkHttpResponse.lambda$toFluxByteBuffer$6(OkHttpAsyncHttpClient.java:293)
+	at reactor.core.publisher.FluxMap$MapSubscriber.onNext(FluxMap.java:100)
+	at reactor.core.publisher.FluxRepeatPredicate$RepeatPredicateSubscriber.onNext(FluxRepeatPredicate.java:78)
+	at reactor.core.publisher.FluxJust$WeakScalarSubscription.request(FluxJust.java:99)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.request(Operators.java:1842)
+	at reactor.core.publisher.FluxMap$MapSubscriber.request(FluxMap.java:155)
+	at reactor.core.publisher.FluxTakeUntil$TakeUntilPredicateSubscriber.request(FluxTakeUntil.java:133)
+	at reactor.core.publisher.FluxFilter$FilterSubscriber.request(FluxFilter.java:179)
+	at reactor.core.publisher.FluxMap$MapSubscriber.request(FluxMap.java:155)
+	at reactor.core.publisher.MonoFlatMapMany$FlatMapManyMain.request(MonoFlatMapMany.java:102)
+	at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.request(Operators.java:1842)
+	at reactor.core.publisher.StrictSubscriber.request(StrictSubscriber.java:138)
+	at com.azure.core.util.FluxUtil$1$1.completed(FluxUtil.java:257)
+	at com.azure.core.util.FluxUtil$1$1.completed(FluxUtil.java:248)
+	at sun.nio.ch.Invoker.invokeUnchecked(Invoker.java:126)
+	at sun.nio.ch.SimpleAsynchronousFileChannelImpl$3.run(SimpleAsynchronousFileChannelImpl.java:389)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+```
