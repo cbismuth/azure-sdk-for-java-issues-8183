@@ -11,18 +11,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Service
-class AuditFileDownloadService {
+class AzureDownloadService {
 
-    private final AzureAuditConnector azureAuditConnector;
+    private final AzureConnector azureConnector;
 
-    AuditFileDownloadService(final AzureAuditConnector azureAuditConnector) {
-        this.azureAuditConnector = azureAuditConnector;
+    AzureDownloadService(final AzureConnector azureConnector) {
+        this.azureConnector = azureConnector;
     }
 
     void downloadToFile(final StorageAccount storageAccount,
                         final BlobContainerItem blobContainerItem,
                         final BlobItem blobItem) {
-        final BlobClient blobClient = azureAuditConnector.createBlobClient(storageAccount, blobContainerItem, blobItem.getName());
+        final BlobClient blobClient = azureConnector.createBlobClient(storageAccount, blobContainerItem, blobItem.getName());
 
         final String absolutePath = createTempFile(blobItem);
 

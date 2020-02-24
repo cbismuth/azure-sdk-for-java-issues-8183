@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-class AzureAuditConnector {
+class AzureConnector {
 
     private final StorageManager storageManager;
 
-    AzureAuditConnector(final StorageManager storageManager) {
+    AzureConnector(final StorageManager storageManager) {
         this.storageManager = storageManager;
     }
 

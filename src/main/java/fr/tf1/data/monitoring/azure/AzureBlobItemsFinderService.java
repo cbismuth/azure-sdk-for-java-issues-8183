@@ -10,29 +10,29 @@ import org.springframework.stereotype.Service;
 @Service
 class AzureBlobItemsFinderService {
 
-    private final AzureAuditConnector azureAuditConnector;
-    private final AuditFileDownloadService auditFileDecoderService;
+    private final AzureConnector azureConnector;
+    private final AzureDownloadService auditFileDecoderService;
 
-    AzureBlobItemsFinderService(final AzureAuditConnector azureAuditConnector,
-                                final AuditFileDownloadService auditFileDecoderService) {
-        this.azureAuditConnector = azureAuditConnector;
+    AzureBlobItemsFinderService(final AzureConnector azureConnector,
+                                final AzureDownloadService auditFileDecoderService) {
+        this.azureConnector = azureConnector;
         this.auditFileDecoderService = auditFileDecoderService;
     }
 
     void queryStorageAccounts() {
-        azureAuditConnector.getStorageAccounts()
-                           .forEach(this::queryStorageAccount);
+        azureConnector.getStorageAccounts()
+                      .forEach(this::queryStorageAccount);
     }
 
     private void queryStorageAccount(final StorageAccount storageAccount) {
-        azureAuditConnector.createBlobServiceClient(storageAccount)
-                           .listBlobContainers()
-                           .stream()
-                           .forEach(blobContainerItem -> queryBlobContainerItem(storageAccount, blobContainerItem));
+        azureConnector.createBlobServiceClient(storageAccount)
+                      .listBlobContainers()
+                      .stream()
+                      .forEach(blobContainerItem -> queryBlobContainerItem(storageAccount, blobContainerItem));
     }
 
     private void queryBlobContainerItem(final StorageAccount storageAccount, final BlobContainerItem blobContainerItem) {
-        final BlobContainerClient blobContainerClient = azureAuditConnector.createBlobContainerClient(storageAccount, blobContainerItem);
+        final BlobContainerClient blobContainerClient = azureConnector.createBlobContainerClient(storageAccount, blobContainerItem);
 
         final PagedIterable<BlobItem> blobItems = blobContainerClient.listBlobs();
 
