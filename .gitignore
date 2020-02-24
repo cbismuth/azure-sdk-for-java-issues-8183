@@ -10,6 +10,3 @@ target/
 # Azure Functions
 obj/
 extensions.csproj
-
-# Test data set
-src/test/resources/*.csv
